@@ -16,6 +16,10 @@ interface AuthStore {
   setUser: (user: User | null) => void;
   clearError: () => void;
   initializeAuth: () => Promise<void>;
+  
+  // Phone login
+  sendPhoneOTP: (phone: string) => Promise<boolean>;
+  verifyPhoneOTP: (phone: string, token: string) => Promise<boolean>;
 }
 
 export const useAuthStore = create<AuthStore>()(
@@ -148,11 +152,62 @@ export const useAuthStore = create<AuthStore>()(
 
       setUser: (user) => set({ user, isAuthenticated: !!user }),
       clearError: () => set({ error: null }),
+
+      // Phone login methods
+      sendPhoneOTP: async (phone) => {
+        set({ isLoading: true, error: null });
+        try {
+          const { error } = await supabase.auth.signInWithOtp({
+            phone,
+          });
+
+          if (error) {
+            set({ error: error.message, isLoading: false });
+            return false;
+          }
+
+          set({ isLoading: false });
+          return true;
+        } catch (error) {
+          set({ error: '发送验证码失败，请重试', isLoading: false });
+          return false;
+        }
+      },
+
+      verifyPhoneOTP: async (phone, token) => {
+        set({ isLoading: true, error: null });
+        try {
+          const { data, error } = await supabase.auth.verifyOtp({
+            phone,
+            token,
+            type: 'sms',
+          });
+
+          if (error) {
+            set({ error: error.message, isLoading: false });
+            return false;
+          }
+
+          if (data.user) {
+            const user: User = {
+              id: data.user.id,
+              email: data.user.email || '',
+              name: data.user.user_metadata?.name || data.user.phone || '用户',
+            };
+            set({ user, isAuthenticated: true, isLoading: false });
+            return true;
+          }
+
+          return false;
+        } catch (error) {
+          set({ error: '验证失败，请重试', isLoading: false });
+          return false;
+        }
+      },
     }),
     {
       name: 'auth-storage',
       partialize: (state) => ({
-        // 只持久化用户基本信息，不持久化敏感信息
         user: state.user,
         isAuthenticated: state.isAuthenticated,
       }),
