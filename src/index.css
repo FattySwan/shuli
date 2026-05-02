@@ -1,0 +1,166 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Edi & P inspired - Colorful Illustrative Pastel Style */
+  --font-primary: 'Noto Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-display: 'Space Grotesk', sans-serif;
+  
+  /* Pastel Color Palette */
+  --pastel-coral: #FF9A8B;
+  --pastel-coral-light: #FFB4A2;
+  --pastel-peach: #FEC5BB;
+  --pastel-pink: #F8EDEB;
+  --pastel-lavender: #E8E8E4;
+  --pastel-mint: #D8E2DC;
+  --pastel-sage: #ECE4DB;
+  --pastel-sky: #CBE4F9;
+  --pastel-lemon: #FDE2E4;
+  --pastel-cream: #FFF1E6;
+  
+  /* Semantic Colors */
+  --bg-primary: #FFF8F5;
+  --bg-secondary: #FEF6F3;
+  --bg-tertiary: #FDF2ED;
+  --surface-white: #FFFFFF;
+  
+  --text-primary: #2D3142;
+  --text-secondary: #6B7280;
+  --text-muted: #9CA3AF;
+  
+  --accent-primary: #FF8B7B;
+  --accent-secondary: #A8D8EA;
+  --accent-tertiary: #FFD6A5;
+  --accent-quaternary: #FDFFB6;
+  
+  --border-light: rgba(255, 139, 123, 0.2);
+  --border-medium: rgba(255, 139, 123, 0.3);
+  
+  --shadow-soft: 0 4px 20px rgba(45, 49, 66, 0.08);
+  --shadow-medium: 0 8px 30px rgba(45, 49, 66, 0.12);
+  --shadow-colorful: 0 8px 32px rgba(255, 139, 123, 0.25);
+}
+
+* {
+  font-family: var(--font-primary);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  font-weight: 600;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: linear-gradient(135deg, var(--bg-primary) 0%, var(--pastel-pink) 50%, var(--pastel-mint) 100%);
+  min-height: 100vh;
+}
+
+/* Custom scrollbar - Pastel style */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--pastel-lavender);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--pastel-coral) 0%, var(--accent-secondary) 100%);
+  border-radius: 5px;
+  border: 2px solid var(--pastel-lavender);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, var(--accent-primary) 0%, #7EC8E3 100%);
+}
+
+/* BookStack Modal Animation */
+@keyframes bookStackFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9) translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-gradient {
+  background-size: 200% 200%;
+  animation: gradientShift 8s ease infinite;
+}
+
+/* Glass morphism effect */
+.glass {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+/* Pastel button styles */
+.btn-pastel {
+  background: linear-gradient(135deg, var(--pastel-coral) 0%, var(--pastel-coral-light) 100%);
+  color: white;
+  border: none;
+  border-radius: 16px;
+  padding: 10px 20px;
+  font-weight: 600;
+  box-shadow: var(--shadow-colorful);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-pastel:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(255, 139, 123, 0.35);
+}
+
+/* Card styles */
+.card-pastel {
+  background: var(--surface-white);
+  border-radius: 20px;
+  box-shadow: var(--shadow-soft);
+  border: 1px solid var(--border-light);
+  transition: all 0.3s ease;
+}
+
+.card-pastel:hover {
+  box-shadow: var(--shadow-medium);
+  transform: translateY(-4px);
+}
